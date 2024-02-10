@@ -93,27 +93,27 @@ jobs:
   # ==============
   # CD task
   # ==============
-  gitops-versioning:
-    runs-on: ubuntu-latest
-    needs: build-and-push-docker-image
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-        with:
-          repository: pitipume/devops-argocd
-          persist-credentials: false
-          fetch-depth: 0
-      - name: change image tag
-        run: |
-          git --version
-          git config user.name "pitipume"
-          git config user.email "pitipume.boonyawan@gmail.com"
-          sed -i -E "s/ghcr.io\/pitipume\/devops-java-example.*$/ghcr.io\/pitipume\/devops-java-example:${GITHUB_SHA}/" kube-gitops/deployment.yml
-          git add kube-gitops/deployment.yml
-          git commit -m "🤖 change docker image version to ${GITHUB_SHA}"
-      - name: push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT }}
-          repository: pitipume/devops-argocd
-          branch: main
+  # gitops-versioning:
+  #   runs-on: ubuntu-latest
+  #   needs: build-and-push-docker-image
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: pitipume/devops-argocd
+  #         persist-credentials: false
+  #         fetch-depth: 0
+  #     - name: change image tag
+  #       run: |
+  #         git --version
+  #         git config user.name "pitipume"
+  #         git config user.email "pitipume.boonyawan@gmail.com"
+  #         sed -i -E "s/ghcr.io\/pitipume\/devops-java-example.*$/ghcr.io\/pitipume\/devops-java-example:${GITHUB_SHA}/" kube-gitops/deployment.yml
+  #         git add kube-gitops/deployment.yml
+  #         git commit -m "🤖 change docker image version to ${GITHUB_SHA}"
+  #     - name: push changes
+  #       uses: ad-m/github-push-action@master
+  #       with:
+  #         github_token: ${{ secrets.PAT }}
+  #         repository: pitipume/devops-argocd
+  #         branch: main
